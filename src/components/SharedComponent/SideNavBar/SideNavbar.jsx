@@ -151,7 +151,7 @@ const SideNavbar = () => {
                         toggleDropdown={toggleDropdown}
                         checkedItems={checkedItems.userList}
                     />
-                    <SidebarDropdown
+                    {/* <SidebarDropdown
                         menuName="Drivers"
                         menuItems={menuItems.driverList}
                         openDropdown={openDropdown}
@@ -160,8 +160,8 @@ const SideNavbar = () => {
                         }
                         toggleDropdown={toggleDropdown}
                         checkedItems={checkedItems.driverList}
-                    />
-                    {/* <SideBarLinkItem label="Drivers" path="/drivers/driver-list" isActive={isActive("/drivers")} /> */}
+                    /> */}
+                    <SideBarLinkItem label="Drivers" path="/drivers/driver-list" isActive={isActive("/drivers")} />
                     <SidebarDropdown
                         menuName="Portable Charger"
                         menuItems={menuItems.portableCharger}

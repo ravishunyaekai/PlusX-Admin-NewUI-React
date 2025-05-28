@@ -58,6 +58,9 @@ const BookingList = () => {
     const [selectedDriverId, setSelectedDriverId]     = useState(null);
     const [selectedRiderId, setSelectedRiderId]       = useState(null);
     const [loading, setLoading]                       = useState(false);
+    const [rowOptions, setRowOptions]    = useState([10, 25, 50, 100]);
+    const [rowSelected, setARowSelected] = useState(10);
+
     const searchTerm = [
         {
             label : 'search', 
@@ -65,74 +68,64 @@ const BookingList = () => {
             type  : 'text'
         }
     ]
-
     const [showPopup, setShowPopup] = useState(false);
-    const [reason, setReason] = useState("");
+    const [reason, setReason]       = useState("");  
+    const handlePDBookingDetails    = (id) => navigate(`/pick-and-drop/booking-details/${id}`)
 
-    const handlePDBookingDetails = (id) => navigate(`/pick-and-drop/booking-details/${id}`)
-
-  const handleCancelClick = (bookingId, riderId) => {
-    setSelectedBookingId(bookingId);
-    setSelectedRiderId(riderId)
-    setShowPopup(true); 
-  };
-
-  const handleClosePopup = () => {
-    setShowPopup(false); 
-    setSelectedBookingId(null);
-    setSelectedRiderId(null)
-    setReason("");
-  };
-
-  const handleReasonChange = (e) => {
-    setReason(e.target.value); 
-  };
-
-  const handleConfirmCancel = () => {
-    if (!reason.trim()) {
-        toast("Please enter a reason for cancellation.", {type:'error'})
-        return;
-      }
-   
-    const obj = {
-        userId     : userDetails?.user_id,
-        email      : userDetails?.email,
-        booking_id : selectedBookingId,
-        rider_id   : selectedRiderId,
-        reason     : reason
+    const handleCancelClick = (bookingId, riderId) => {
+        setSelectedBookingId(bookingId);
+        setSelectedRiderId(riderId)
+        setShowPopup(true); 
     };
-
-    postRequestWithToken('charging-service-cancel', obj, async (response) => {
-        if (response.code === 200) {
-            toast(response.message[0], {type:'success'})
-                setTimeout(() => {
-                    fetchList(currentPage, filters);
-                }, 1500);
-            setShowPopup(false);
-            setSelectedBookingId(null);
-            setSelectedRiderId(null)
-        } else {
-            toast(response.message, {type:'error'})
-            console.log('error in charger-booking-list api', response);
+    const handleClosePopup = () => {
+        setShowPopup(false); 
+        setSelectedBookingId(null);
+        setSelectedRiderId(null)
+        setReason("");
+    };
+    const handleReasonChange = (e) => {
+        setReason(e.target.value); 
+    };
+    const handleConfirmCancel = () => {
+        if (!reason.trim()) {
+            toast("Please enter a reason for cancellation.", {type:'error'})
+            return;
         }
-    });
-    
-  };
-
-    const fetchList = (page, appliedFilters = {}) => {
+        const obj = {
+            userId     : userDetails?.user_id,
+            email      : userDetails?.email,
+            booking_id : selectedBookingId,
+            rider_id   : selectedRiderId,
+            reason     : reason
+        };
+        postRequestWithToken('charging-service-cancel', obj, async (response) => {
+            if (response.code === 200) {
+                toast(response.message[0], {type:'success'})
+                    setTimeout(() => {
+                        fetchList(currentPage, filters);
+                    }, 1500);
+                setShowPopup(false);
+                setSelectedBookingId(null);
+                setSelectedRiderId(null)
+            } else {
+                toast(response.message, {type:'error'})
+                console.log('error in charger-booking-list api', response);
+            }
+        });
+    };
+    const fetchList = (page, appliedFilters = {}, rowSelected=10) => {
         if (page === 1 && Object.keys(appliedFilters).length === 0) {
             setLoading(false);
         } else {
             setLoading(true);
         } 
-
         const obj = {
             userId  : userDetails?.user_id,
             email   : userDetails?.email,
             page_no : page,
             ...appliedFilters,
+            rowSelected,
         }
-
         postRequestWithToken('pick-and-drop-booking-list', obj, async(response) => {
             if (response.code === 200) {
                 setChargerBookingList(response?.data)
@@ -143,10 +136,26 @@ const BookingList = () => {
             }
             setLoading(false);
         })
+    }
+    useEffect(() => {
+        if (!userDetails || !userDetails.access_token) {
+            navigate('/login'); 
+            return; 
+        }
+        fetchList(currentPage, filters, rowSelected);
+    }, [currentPage, filters, rowSelected]);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+    const fetchFilteredData = (newFilters = {}) => {
+        setFilters(newFilters);  
+        setCurrentPage(1); 
+    };
+    const openModal = (bookingId) => {
         const rsaObj = {
-            userId       : obj.userId,
-            email        : obj.email,
-            page_no      : obj.page_no,
+            userId       : userDetails?.user_id,
+            email        : userDetails?.email,
             service_type : 'Valet Charging',
         };
         postRequestWithToken('all-rsa-list', rsaObj, async(response) => {
@@ -157,39 +166,16 @@ const BookingList = () => {
                 console.log('error in public-charger-station-list api', response);
             }
         })
-    }
-
-    useEffect(() => {
-        if (!userDetails || !userDetails.access_token) {
-            navigate('/login'); 
-            return; 
-        }
-        fetchList(currentPage, filters);
-    }, [currentPage, filters]);
-
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
-
-    const fetchFilteredData = (newFilters = {}) => {
-        setFilters(newFilters);  
-        setCurrentPage(1); 
-    };
-
-    const openModal = (bookingId) => {
         setSelectedBookingId(bookingId);
         setIsModalOpen(true);
     };
-
     const closeModal = () => {
         setIsModalOpen(false);
         setSelectedBookingId(null);
     };
-
     const handleDriverSelect = (driver) => {
         setSelectedDriverId(driver);
     };
-
     const assignDriver = () => {
         const obj = {
             userId     : userDetails?.user_id,
@@ -210,18 +196,22 @@ const BookingList = () => {
                 console.log('error in /pick-and-drop-assign api', response);
             }
         })
-
     }
-
+    const handleRowperPagePage = (limit) => {
+        setARowSelected(limit);
+    };
     return (
         <div className='main-container'>
             <ToastContainer/>
-            <SubHeader heading = "Pick & Drop Booking List"
-                fetchFilteredData={fetchFilteredData} 
-                dynamicFilters={dynamicFilters} filterValues={filters}
-                searchTerm = {searchTerm}
+            <SubHeader 
+                heading              = "Pick & Drop Booking List"
+                fetchFilteredData    = {fetchFilteredData} 
+                dynamicFilters       = {dynamicFilters} filterValues={filters}
+                searchTerm           = {searchTerm}
+                rowOptions           = {rowOptions}
+                rowSelected          = {rowSelected}
+                handleRowperPagePage = {handleRowperPagePage}
             />
-
             {loading ? <Loader /> :
                 chargerBookingList.length === 0 ? (
                     <EmptyList

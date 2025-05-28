@@ -98,10 +98,10 @@ const TruckFuelHistory = ({truckId}) => {
                                 <td>{ item?.fuel_litter }</td>
                                 <td>{ item?.meter_reading }</td>
                                 <td>
-                                    <img key={index} src={imageBaseUrl+item?.invoice_image } alt={`Img${index}`} style={{ maxWidth: '70px', height: '50px', margin: '5px' }} />
+                                    <img key={index} src={imageBaseUrl+item?.invoice_image } alt={`Img${index}`} style={{ maxWidth: '70px', height: '50px', width: '80px', margin: '5px' }} />
                                 </td>
                                 <td>
-                                    <img key={index} src={imageBaseUrl+item?.truck_image } alt={`Img${index}`} style={{ maxWidth: '70px', height: '50px', margin: '5px' }} />
+                                    <img key={index} src={imageBaseUrl+item?.truck_image } alt={`Img${index}`} style={{ maxWidth: '70px', height: '50px', width: '80px', margin: '5px' }} />
                                 </td>
                             </tr>
                         ))

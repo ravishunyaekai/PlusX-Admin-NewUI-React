@@ -69,3 +69,22 @@
     position: relative;
     top: 12px;
 }
+/* @media (max-width: 1440px) {
+  .containerCharger {
+    width: 95%;
+    overflow-x: scroll;
+  }
+  .containerCharger::-webkit-scrollbar {
+    width: 8px;
+  }
+ 
+  .containerCharger::-webkit-scrollbar-track {
+    background: #1e1e1e;
+    border-radius: 10px;
+  }
+ 
+  .containerCharger::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 10px;
+  }
+} */

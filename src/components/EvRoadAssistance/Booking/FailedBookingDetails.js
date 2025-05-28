@@ -58,7 +58,7 @@ const ChargerBookingDetails = () => {
     }
     const sectionContent1 = {
         bookingStatus : 'Payment Not Received',
-        price         : bookingDetails?.price ? `${ ( bookingDetails?.price / 100).toFixed(2) } AED` : '0 AED',
+        price         : bookingDetails?.price ? `${ ( bookingDetails?.price ).toFixed(2) } AED` : '0 AED',
         vehicle        : bookingDetails?.vehicle_data,
         address: (
             <a

@@ -118,7 +118,7 @@ font-size: 16px;
 .customSelectWrapper.open .customSelectIcon {
     transform: translateY(-50%) rotate(180deg);
 }
-
+/* 
 .accordionBody, .accordionContainer, .yourPanelWrapper {
     overflow: visible !important;
     position: relative !important;
@@ -129,4 +129,22 @@ font-size: 16px;
     flex-direction: column;
     flex-wrap: wrap;
     padding: 0px 10px;
+} */
+
+.accordionBody, .accordionContainer {
+  overflow: visible !important;
+  position: relative !important;
+  z-index: 0;
+}
+.selectSearch {
+    width: 100%; 
+}
+.selectItem {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0px 10px;
+    position: relative;       
+    width: 100%; 
 }

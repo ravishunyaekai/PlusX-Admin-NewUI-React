@@ -85,8 +85,11 @@ const ChargerBookingList = () => {
     const [loading, setLoading]                       = useState(false);
     const [downloadClicked, setDownloadClicked]       = useState(false)
 
-    const [areaOptions, setAreaOptions] = useState([]);
+    const [areaOptions, setAreaOptions]   = useState([]);
     const [areaSelected, setAreaSelected] = useState('');
+
+    const [rowOptions, setRowOptions]    = useState([10, 25, 50, 100]);
+    const [rowSelected, setARowSelected] = useState(10);
 
     const handleCancelClick = (bookingId, riderId) => {
         setSelectedBookingId(bookingId);
@@ -139,7 +142,7 @@ const ChargerBookingList = () => {
             email: userDetails?.email,
         };
         postRequestWithToken('all-area-list', obj, (response) => {
-            let areaOptionss = []
+            let areaOptionss = [{ name: 'Select Area', value: '' }]
             for (const item of response.area_data) {
                 // console.log(item)
                 areaOptionss.push({ name: item.area_name, value: item.area_name })
@@ -159,7 +162,7 @@ const ChargerBookingList = () => {
         }
         allAreaList();
     }, []);
-    const fetchList = (page, appliedFilters = {}, scheduleFilters = {}, areaSelected='') => {
+    const fetchList = (page, appliedFilters = {}, scheduleFilters = {}, areaSelected='', rowSelected=10) => {
         if (page === 1 && Object.keys(appliedFilters).length === 0) {
             setLoading(false);
         } else {
@@ -172,6 +175,7 @@ const ChargerBookingList = () => {
             ...appliedFilters,
             scheduleFilters,
             areaSelected,
+            rowSelected,
         };
         postRequestWithToken('charger-booking-list', obj, async (response) => {
             if (response.code === 200) {
@@ -184,21 +188,19 @@ const ChargerBookingList = () => {
             }
             setLoading(false);
         });
-
-        
     };
     useEffect(() => {
         if (!userDetails || !userDetails.access_token) {
             navigate('/login');
             return;
         }
-        fetchList(currentPage, filters, scheduleFilters, areaSelected);
-    }, [currentPage, filters, scheduleFilters, areaSelected]);
+        fetchList(currentPage, filters, scheduleFilters, areaSelected, rowSelected);
+    }, [currentPage, filters, scheduleFilters, areaSelected, rowSelected]);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-
+    
     const fetchFilteredData = (newFilters = {}) => {
         setFilters(newFilters);
         setCurrentPage(1);
@@ -292,22 +294,28 @@ const ChargerBookingList = () => {
         setAreaSelected(valaa);
         setCurrentPage(1);
     }
+    const handleRowperPagePage = (limit) => {
+        setARowSelected(limit);
+    };
     return (
         <div className='main-container'>
             <SubHeader
-                heading             = "Portable Charger Booking List"
-                fetchFilteredData   = {fetchFilteredData}
-                dynamicFilters      = {dynamicFilters}
-                filterValues        = {filters}
-                searchTerm          = {searchTerm}
-                count               = {totalCount}
-                setDownloadClicked  = {setDownloadClicked}
-                handleDownloadClick = {handleDownloadClick}  
-                scheduleDateChange  = {scheduleFilteredData}
-                scheduleFilters     = {scheduleFilters}
-                areaOptions         = {areaOptions}
-                areaSelected        = {areaSelected}
-                handleArea        = {handleArea}
+                heading              = "Portable Charger Booking List"
+                fetchFilteredData    = {fetchFilteredData}
+                dynamicFilters       = {dynamicFilters}
+                filterValues         = {filters}
+                searchTerm           = {searchTerm}
+                count                = {totalCount}
+                setDownloadClicked   = {setDownloadClicked}
+                handleDownloadClick  = {handleDownloadClick}  
+                scheduleDateChange   = {scheduleFilteredData}
+                scheduleFilters      = {scheduleFilters}
+                areaOptions          = {areaOptions}
+                areaSelected         = {areaSelected}
+                handleArea           = {handleArea}
+                rowOptions           = {rowOptions}
+                rowSelected          = {rowSelected}
+                handleRowperPagePage = {handleRowperPagePage}
             />
             <ToastContainer />
             
@@ -390,10 +398,7 @@ const ChargerBookingList = () => {
                                         </div>
                                     );
                                 }
-                            }
-                            
-                            
-                            
+                            }                           
                         ]}
                         pageHeading="Charger Booking List"
                     />

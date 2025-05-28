@@ -13,7 +13,7 @@ import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { postRequestWithToken } from '../../../api/Requests';
 
-const SubHeader = ({ heading, fetchFilteredData, dynamicFilters, filterValues, addButtonProps, searchTerm, count, modalTitle, setRefresh,apiEndPoint, nameKey, setDownloadClicked, handleDownloadClick, scheduleDateChange, scheduleFilters, areaOptions, areaSelected, handleArea }) => {
+const SubHeader = ({ heading, fetchFilteredData, dynamicFilters, filterValues, addButtonProps, searchTerm, count, modalTitle, setRefresh,apiEndPoint, nameKey, setDownloadClicked, handleDownloadClick, scheduleDateChange, scheduleFilters, areaOptions, areaSelected, handleArea, rowOptions, rowSelected, handleRowperPagePage }) => {
 
     const userDetails = JSON.parse(sessionStorage.getItem('userDetails'));
 
@@ -182,6 +182,9 @@ const SubHeader = ({ heading, fetchFilteredData, dynamicFilters, filterValues, a
                     areaOptions={areaOptions}
                     areaSelected={areaSelected}
                     handleArea={handleArea}
+                    rowOptions           = {rowOptions}
+                    rowSelected          = {rowSelected}
+                    handleRowperPagePage = {handleRowperPagePage}
                 />
             )}
 

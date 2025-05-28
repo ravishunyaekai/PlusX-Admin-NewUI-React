@@ -69,10 +69,12 @@ const RoadAssistanceBookingList = () => {
     const [selectedBookingId, setSelectedBookingId]   = useState(null);
     const [selectedDriverId, setSelectedDriverId]     = useState(null);
     const [selectedRiderId, setSelectedRiderId]       = useState(null);
-    const [refresh, setRefresh]                       = useState(false)
+    // const [refresh, setRefresh]                       = useState(false)
     const [showPopup, setShowPopup]                   = useState(false);
     const [reason, setReason]                         = useState("");
     const [loading, setLoading]                       = useState(false);
+    const [rowOptions, setRowOptions]    = useState([10, 25, 50, 100]);
+    const [rowSelected, setARowSelected] = useState(10);
 
     const handleCancelClick = (bookingId, riderId) => {
         setSelectedBookingId(bookingId);
@@ -119,7 +121,7 @@ const RoadAssistanceBookingList = () => {
         
     };
 
-    const fetchList = (page, appliedFilters = {}) => {
+    const fetchList = (page, appliedFilters = {}, rowSelected) => {
         if (page === 1 && Object.keys(appliedFilters).length === 0) {
             setLoading(false);
         } else {
@@ -129,10 +131,9 @@ const RoadAssistanceBookingList = () => {
             userId  : userDetails?.user_id,
             email   : userDetails?.email,
             page_no : page,
-            // service_type: 'Portable Charger',
+            rowSelected,
             ...appliedFilters,
         };
-
         postRequestWithToken('ev-road-assistance-booking-list', obj, async (response) => {
             if (response.code === 200) {
                 setChargerBookingList(response?.data);
@@ -142,15 +143,6 @@ const RoadAssistanceBookingList = () => {
             }
             setLoading(false);
         });
-        obj.service_type = 'Roadside Assistance'
-        postRequestWithToken('all-rsa-list', obj, async(response) => {
-            if (response.code === 200) {
-                setRsaList(response?.data)
-            } else {
-                // toast(response.message, {type:'error'})
-                console.log('error in rsa-listt api', response);
-            }
-        })
     };
 
     useEffect(() => {
@@ -158,8 +150,8 @@ const RoadAssistanceBookingList = () => {
             navigate('/login');
             return;
         }
-        fetchList(currentPage, filters);
-    }, [currentPage, filters, refresh]);
+        fetchList(currentPage, filters, rowSelected);
+    }, [currentPage, filters, rowSelected ]); //refresh
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -169,6 +161,18 @@ const RoadAssistanceBookingList = () => {
         setCurrentPage(1);
     };
     const openModal = (bookingId) => {
+        const rsaObj = {
+            userId       : userDetails?.user_id,
+            email        : userDetails?.email,
+            service_type : 'Portable Charger',
+        };
+        postRequestWithToken('all-rsa-list', rsaObj, async(response) => {
+            if (response.code === 200) {
+                setRsaList(response?.data) 
+            } else {
+                console.log('error in rsa-listt api', response);
+            }
+        })
         setSelectedBookingId(bookingId);
         setIsModalOpen(true);
     };
@@ -202,6 +206,9 @@ const RoadAssistanceBookingList = () => {
             }
         })
     }
+    const handleRowperPagePage = (limit) => {
+        setARowSelected(limit);
+    };
     return (
         <div className='main-container'>
             <SubHeader
@@ -210,6 +217,9 @@ const RoadAssistanceBookingList = () => {
                 dynamicFilters={dynamicFilters}
                 filterValues={filters}
                 searchTerm = {searchTerm}
+                rowOptions           = {rowOptions}
+                rowSelected          = {rowSelected}
+                handleRowperPagePage = {handleRowperPagePage}
             />
             <ToastContainer />
 
@@ -228,7 +238,7 @@ const RoadAssistanceBookingList = () => {
                             { key: 'created_at', label: 'Date & Time', format: (date) => moment(date).format('DD MMM YYYY hh:mm A') },
                             { key: 'request_id', label: 'Order ID' },
                             { key: 'name', label: 'Customer Name' },
-                            { key: 'price', label: 'Price', format: (price) => (price ? `AED ${price}` : '') },
+                            { key: 'price', label: 'Price', format: (price) => (price ? `AED ${price.toFixed(2)}` : '0') },
                             { key: 'order_status', label: 'Status', format: (status) => statusMapping[status] || status },
                             { key: 'rsa_name', label: 'Driver Name' }, 
                             {

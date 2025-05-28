@@ -8,7 +8,7 @@ import { format } from 'date-fns';
 import SelectSearch from 'react-select-search';
 import 'react-select-search/style.css';
 
-const AccordionFilter = ({ type, isOpen, fetchFilteredData, dynamicFilters, filterValues, scheduleDateChange, scheduleFilters, areaOptions, areaSelected, handleArea }) => {
+const AccordionFilter = ({ type, isOpen, fetchFilteredData, dynamicFilters, filterValues, scheduleDateChange, scheduleFilters, areaOptions, areaSelected, handleArea, rowOptions, rowSelected, handleRowperPagePage }) => {
  
     const [showContent, setShowContent] = useState(isOpen);
     const [openDropdowns, setOpenDropdowns] = useState({}); // Separate state for each dropdown
@@ -83,9 +83,13 @@ const AccordionFilter = ({ type, isOpen, fetchFilteredData, dynamicFilters, filt
     const toggleDropdown = (name) => {
         setOpenDropdowns((prev) => ({ ...prev, [name]: !prev[name] }));
     };
-    const handleAreaa = (val, name) => {
-        console.log(val)
+    const handleAreaa = (val) => {
+        // console.log('val', val)
         handleArea(val);
+    };
+    const pageLimit = (e) => {
+        const { name, value } = e.target;
+        handleRowperPagePage(value);
     };
     return (
         <div data-aos="fade-left">
@@ -149,17 +153,37 @@ const AccordionFilter = ({ type, isOpen, fetchFilteredData, dynamicFilters, filt
                                                     )}
                                                 </div>
                                             ))}
-                                            { (type == 'Portable Charger Booking List') && (
-                                                <div className={`col-xl-4 col-lg-6 col-12 ${styles.selectItem}`}  style={{ position: 'relative', width: '100%' }}>
+                                            { (type == 'Portable Charger Booking List' ) && (
+                                                <div className={`col-xl-4 col-lg-6 col-12 ${styles.selectItem}`} >
                                                     <label className={styles.filterLabel} htmlFor="date_filter">Search Area</label>
+                                                    <div className={styles.selectSearch}>
                                                     <SelectSearch
                                                         options={areaOptions}
                                                         value={areaSelected}
-                                                        onChange={(val) => handleAreaa(val, 'areaSearch')}
+                                                        onChange={(val) => handleAreaa(val )}
                                                         placeholder="Search"
                                                         name="areaSearch"
                                                         search
+                                                        isClearable
                                                     />
+                                                    </div>
+                                                </div>  
+                                            )}
+                                            { (type == 'Portable Charger Booking List' || type == "Pick & Drop Booking List" || type == "Ev Road Assitance Booking List") && (
+                                                <div className={`col-xl-4 col-lg-6 col-12 ${styles.selectItem}`}  style={{ position: 'relative', }}>
+                                                    <label className={styles.filterLabel} htmlFor="date_filter">No. of Records</label>
+                                                    <select
+                                                        className={`${styles.filterSelect} ${styles.customSelect}`}
+                                                        id="no_of_records"
+                                                        name="no_of_records"
+                                                        value={rowSelected}
+                                                        onChange={pageLimit}
+                                                        onBlur={() => handleBlur('no_of_records')}
+                                                    >
+                                                        {rowOptions.map((option) => (
+                                                            <option key={option} value={option}>{option}</option>
+                                                        ))}
+                                                    </select>
                                                 </div>  
                                             )}
                                         </form>

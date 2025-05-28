@@ -99,7 +99,7 @@ const FailedChargerBookingList = () => {
                             { key: 'created_at', label: 'Date & Time', format: (date) => moment(date).format('DD MMM YYYY hh:mm A') },
                             { key: 'request_id', label: 'Order ID' },
                             { key: 'name', label: 'Customer Name' },
-                            { key: 'price', label: 'Price', format: (price) => (price ? `AED ${price}` : '') },
+                            { key: 'price', label: 'Price', format: (price) => (price ? `AED ${price.toFixed(2)}` : '') },
                             { key: 'order_status', label: 'Status', format: (status) => statusMapping[status] || status },
                             {
                                 key         : 'action',
