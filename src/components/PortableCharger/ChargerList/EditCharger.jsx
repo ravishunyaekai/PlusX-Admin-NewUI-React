@@ -261,7 +261,7 @@ const EditPortableCharger = () => {
                                         // src={URL.createObjectURL(file)}
                                         src={
                                             typeof file === 'string'
-                                                ? `${process.env.REACT_APP_SERVER_URL}uploads/charger-images/${file}`
+                                                ? `${process.env.REACT_APP_DIR_UPLOADS}charger-images/${file}`
                                                 : URL.createObjectURL(file)
                                         }
                                         alt="Preview"

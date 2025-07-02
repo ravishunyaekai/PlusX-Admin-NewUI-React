@@ -18,7 +18,8 @@ const statusMapping = {
     'CC' : 'Charging Completed',
     'PU' : 'POD Picked Up',
     'WC' : 'Work Completed',
-    'C'  : 'Cancel'
+    'C'  : 'Cancel',
+    'RPD' : 'Rescheduled Booking'
 };
 
 const PickAndDropBookingDetails = () => {
@@ -39,7 +40,7 @@ const PickAndDropBookingDetails = () => {
 
         postRequestWithToken('pick-and-drop-booking-details', obj, (response) => {
             if (response.code === 200) {
-                setBookingDetails(response?.data[0] || {});
+                setBookingDetails(response?.data || {});
                 setHistory(response?.history)
                 setImageUrl(response.imageUrl);
                 setFeedBack(response?.feedBack);

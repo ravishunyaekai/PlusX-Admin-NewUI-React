@@ -851,7 +851,7 @@ console.log(isActive);
                     <img
                       src={
                         typeof file === 'string'
-                          ? `${process.env.REACT_APP_SERVER_URL}uploads/shop-images/${file}`
+                          ? `${process.env.REACT_APP_DIR_UPLOADS}shop-images/${file}`
                           : URL.createObjectURL(file)
                       }
                       alt="Preview"
@@ -893,7 +893,7 @@ console.log(isActive);
                             key={index}
                             src={
                               typeof file === 'string'
-                                ? `${process.env.REACT_APP_SERVER_URL}uploads/shop-images/${file}`
+                                ? `${process.env.REACT_APP_DIR_UPLOADS}shop-images/${file}`
                                 : URL.createObjectURL(file)
                             }
                             alt={`Preview ${index + 1}`}

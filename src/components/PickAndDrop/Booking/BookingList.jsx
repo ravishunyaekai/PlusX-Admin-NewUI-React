@@ -229,7 +229,38 @@ const BookingList = () => {
                                     label: 'Invoice Date', 
                                     format: (date) => moment(date).format('DD MMM YYYY ') 
                                 } ,
-                                { key: 'request_id', label: 'ID' }, 
+                                // { key: 'request_id', label: 'ID' }, 
+                                {
+                                    key         : 'request_id',
+                                    label       : 'ID',
+                                    relatedKeys : ['rescheduled_booking'],
+                                    format : (data, key, relatedKeys) => {
+                                        const bookingId = data[key];
+                                        const isRescheduled = data[relatedKeys[0]];
+                                    
+                                        return (
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <span>{bookingId}</span>
+                                            {isRescheduled > 0 && (
+                                            <span
+                                                style={{
+                                                backgroundColor: '#00ffc3',
+                                                color: '#000',
+                                                borderRadius: '4px',
+                                                padding: '2px 6px',
+                                                fontSize: '0.75rem',
+                                                marginTop: '4px',
+                                                display: 'inline-block',
+                                                width: 'fit-content'
+                                                }}
+                                            >
+                                                Rescheduled
+                                            </span>
+                                            )}
+                                        </div>
+                                        );
+                                    }
+                                },
                                 { key: 'name', label: 'Customer Name' }, 
                                 { 
                                     key: 'price', 

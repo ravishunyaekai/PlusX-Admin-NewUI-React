@@ -52,23 +52,6 @@ const OfferDetails = () => {
         customerName    : ( offerDetails?.status === 1 ) ? 'Active' : "Inactive",
         customerContact : moment(offerDetails?.offer_exp_date).format('DD MMM YYYY'),
     };
-    
-    // const sectionTitles1 = {
-    //     status : "Status",
-    //     expiry : "Expiry Date",
-    // }
-    // const sectionContent1 = {
-    //     status : ( offerDetails?.status === 1 ) ? 'Active' : "Inactive",
-    //     expiry : moment(offerDetails?.offer_exp_date).format('DD MMM YYYY'),
-    // }
-    // const imageTitles = {
-    //     coverImage : "Cover Image",
-    // }
-    // const imageContent = {
-    //     coverImage    : offerDetails?.image,
-    //     baseUrl       : `${process.env.REACT_APP_SERVER_URL}uploads/offer/`,
-    // }
-
     return (
         <div className={styles.appSignupSection}>
             <BookingDetailsHeader

@@ -164,7 +164,7 @@ const RoadAssistanceBookingList = () => {
         const rsaObj = {
             userId       : userDetails?.user_id,
             email        : userDetails?.email,
-            service_type : 'Portable Charger',
+            service_type : 'Roadside Assistance',
         };
         postRequestWithToken('all-rsa-list', rsaObj, async(response) => {
             if (response.code === 200) {

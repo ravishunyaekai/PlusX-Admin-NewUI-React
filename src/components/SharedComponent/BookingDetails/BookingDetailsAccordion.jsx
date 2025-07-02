@@ -22,6 +22,8 @@ const BookingDetailsAccordion = ({history, rsa, imageUrl, fieldMapping, title })
         DO  : 'Drop Off',
         C   : "Cancelled",
         RO  : 'POD Reached at Office',
+        RSB : 'Rescheduled Booking',
+        RPD : 'Rescheduled Booking'
     };
 
     const sections = history?.map((item) => ({
@@ -72,7 +74,7 @@ const BookingDetailsAccordion = ({history, rsa, imageUrl, fieldMapping, title })
                             {section.order_status === 'C' && (
                                 <>
                                     <p className={styles.accodionPTag}><strong>Cancelled By :</strong> { section?.cancel_by } <br /></p>
-                                    <p className={styles.accodionPTag}><strong>Reason :</strong> { section?.reason } <br /> </p> 
+                                    {/* <p className={styles.accodionPTag}><strong>Reason :</strong> { section?.reason } <br /> </p>  */}
                                 </>
                             )}
                             {section.order_status === 'CS' && (

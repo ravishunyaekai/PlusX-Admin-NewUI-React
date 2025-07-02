@@ -334,7 +334,38 @@ const ChargerBookingList = () => {
                             { key: 'created_at', label: 'Date & Time', format: (date) => moment(date).format('DD MMM YYYY') },
                             { key: 'slot_date', label: 'Schedule Date', format: (date) => moment(date).format('DD MMM YYYY') },
                             { key: 'slot_time', label: 'Schedule Time', format: (date) => moment(date).format(' hh:mm A') },
-                            { key: 'booking_id', label: 'ID' },
+                            // { key: 'booking_id', label: 'ID' },
+                            {
+                                key         : 'booking_id',
+                                label       : 'ID',
+                                relatedKeys : ['rescheduled_booking'],
+                                format : (data, key, relatedKeys) => {
+                                    const bookingId = data[key];
+                                    const isRescheduled = data[relatedKeys[0]];
+                                
+                                    return (
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <span>{bookingId}</span>
+                                        {isRescheduled > 0 && (
+                                        <span
+                                            style={{
+                                            backgroundColor: '#00ffc3',
+                                            color: '#000',
+                                            borderRadius: '4px',
+                                            padding: '2px 6px',
+                                            fontSize: '0.75rem',
+                                            marginTop: '4px',
+                                            display: 'inline-block',
+                                            width: 'fit-content'
+                                            }}
+                                        >
+                                            Rescheduled
+                                        </span>
+                                        )}
+                                    </div>
+                                    );
+                                }
+                            },
                             { key: 'user_name', label: 'Customer Name' }, 
                             { key: 'area', label: 'Area' }, 
                             { key: 'status', label: 'Status', format: (status) => statusMapping[status] || status },                    

@@ -180,7 +180,6 @@ const SideNavbar = () => {
                         toggleDropdown={toggleDropdown}
                         checkedItems={checkedItems.pickAndDrop}
                     />
-                    <SideBarLinkItem label="Public Chargers Station" path="/public-charger-station/public-charger-station-list" isActive={isActive("/public-charger-station")} />
                     <SidebarDropdown
                         menuName="EV Road Assistance"
                         menuItems={menuItems.evRoadAssistance}
@@ -191,6 +190,7 @@ const SideNavbar = () => {
                         toggleDropdown={toggleDropdown}
                         checkedItems={checkedItems.evRoadAssistance}
                     />
+                    <SideBarLinkItem label="Public Chargers Station" path="/public-charger-station/public-charger-station-list" isActive={isActive("/public-charger-station")} />
 
                     <SideBarLinkItem label="Electric Car Leasing" path="/electric-car-leasing/electric-car-list" isActive={isActive("/electric-car-leasing")} />
                     <SideBarLinkItem label="Electric Bike Leasing" path="/electric-bike-leasing/electric-bike-list" isActive={isActive("/electric-bike-leasing")} />

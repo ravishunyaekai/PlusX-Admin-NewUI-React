@@ -88,7 +88,7 @@ const ChargerBookingDetails = () => {
             </a>
         ),
         slotDate      : moment(bookingDetails?.slot_date).format('DD MMM YYYY'),
-        slotTime      : bookingDetails?.slot_time,
+        slotTime      : moment(bookingDetails?.slot_time, 'HH:mm:ss').format('h:mm A'),
         parkingNumber : bookingDetails?.parking_number,
         parkingFloor  : bookingDetails?.parking_floor,
     } 

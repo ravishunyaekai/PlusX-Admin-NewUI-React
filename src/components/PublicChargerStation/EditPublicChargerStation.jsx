@@ -654,7 +654,7 @@ const EditPublicChargerStation = () => {
                                     <img
                                         src={
                                             typeof file === 'string'
-                                                ? `${process.env.REACT_APP_SERVER_URL}uploads/charging-station-images/${file}`
+                                                ? `${process.env.REACT_APP_DIR_UPLOADS}charging-station-images/${file}`
                                                 : URL.createObjectURL(file)
                                         }
                                         alt="Preview"
@@ -694,7 +694,7 @@ const EditPublicChargerStation = () => {
                                             key={index}
                                             src={
                                                 typeof file === 'string'
-                                                    ? `${process.env.REACT_APP_SERVER_URL}uploads/charging-station-images/${file}`
+                                                    ? `${process.env.REACT_APP_DIR_UPLOADS}charging-station-images/${file}`
                                                     : URL.createObjectURL(file)
                                             }
                                             alt={`Preview ${index + 1}`}

@@ -9,7 +9,7 @@ const BookingLeftDetails = ({ titles, content, sectionTitles2, sectionContent2, 
     const shouldRenderFourthSection = Object.keys(sectionContent4 || {}).length > 0; 
     const shouldRenderFifthSection = Object.keys(sectionContent5 || {}).length > 0; 
     const shouldRenderSixthSection = Object.keys(sectionContent6 || {}).length > 0; 
-
+    
     return (
         <div className="col-xl-12">
             <div className={styles.bookingStatusContainer}>

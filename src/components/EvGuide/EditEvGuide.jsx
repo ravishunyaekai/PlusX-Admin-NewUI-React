@@ -364,7 +364,7 @@ const EditEvGuide = () => {
                                     <img
                                         src={
                                             typeof file === 'string'
-                                                ? `${process.env.REACT_APP_SERVER_URL}uploads/vehicle-image/${file}`
+                                                ? `${process.env.REACT_APP_DIR_UPLOADS}vehicle-image/${file}`
                                                 : URL.createObjectURL(file)
                                         }
                                         alt="Preview"
@@ -403,7 +403,7 @@ const EditEvGuide = () => {
                                                 key={index}
                                                 src={
                                                     typeof file === 'string'
-                                                        ? `${process.env.REACT_APP_SERVER_URL}uploads/vehicle-image/${file}`
+                                                        ? `${process.env.REACT_APP_DIR_UPLOADS}vehicle-image/${file}`
                                                         : URL.createObjectURL(file)
                                                 }
                                                 alt={`Preview ${index + 1}`}

@@ -394,7 +394,7 @@ const EditClub = () => {
                                     <img
                                         src={
                                             typeof file === 'string'
-                                                ? `${process.env.REACT_APP_SERVER_URL}uploads/club-images/${file}`
+                                                ? `${process.env.REACT_APP_DIR_UPLOADS}club-images/${file}`
                                                 : URL.createObjectURL(file)
                                         }
                                         alt="Preview"
@@ -433,7 +433,7 @@ const EditClub = () => {
                                                 key={index}
                                                 src={
                                                     typeof file === 'string'
-                                                        ? `${process.env.REACT_APP_SERVER_URL}uploads/club-images/${file}`
+                                                        ? `${process.env.REACT_APP_DIR_UPLOADS}club-images/${file}`
                                                         : URL.createObjectURL(file)
                                                 }
                                                 alt={`Preview ${index + 1}`}

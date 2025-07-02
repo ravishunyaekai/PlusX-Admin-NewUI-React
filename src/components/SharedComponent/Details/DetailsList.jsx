@@ -5,7 +5,7 @@ import Pagination from '../Pagination/Pagination';
 const DetailsList = ({ addressList }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages]   = useState(1);
-    const itemsPerPage                  = 3;
+    const itemsPerPage                  = 5;
 
     useEffect(() => {
         if (addressList) {

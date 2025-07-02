@@ -18,6 +18,7 @@ const Invoice = ({ title, service, details }) => {
         };
         html2pdf().set(options).from(invoiceElement).save();
     };
+    console.log(details)
     return (
         <div className={styles.invoiceMainContainer}>
             <div className={styles.invoiceSection} >
@@ -126,12 +127,22 @@ const Invoice = ({ title, service, details }) => {
                                                     <td>{details?.kw.toFixed(2)}</td>
                                                     <td className={styles.amountRightAlign}>{details?.kw_cpo_amt.toFixed(2)}</td>
                                                 </tr>
+                                                
                                                 <tr className={styles.serviceItem}>
                                                     <td>Delivery Charge</td>
                                                     <td></td>
                                                     <td></td>
                                                     <td className={styles.amountRightAlign}>{details?.delv_charge.toFixed(2)}</td>
                                                 </tr>
+                                                { details?.current_percent == 0 && (
+                                                    <tr className={styles.serviceItem}>
+                                                        <td>Jump Start </td>
+                                                        {/* ({details?.discount+'%'}) */}
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td className={styles.amountRightAlign}>{details?.additional_price.toFixed(2)}</td>
+                                                    </tr>
+                                                )}
                                                 <tr className={styles.serviceItem}>
                                                     <td>VAT 5%</td>
                                                     <td></td>

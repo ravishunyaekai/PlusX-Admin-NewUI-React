@@ -294,7 +294,7 @@ const EditEmergencyTeam = () => {
                                     <img
                                         src={
                                             typeof file === 'string'
-                                                ? `${process.env.REACT_APP_SERVER_URL}uploads/rsa_images/${file}`
+                                                ? `${process.env.REACT_APP_DIR_UPLOADS}rsa_images/${file}`
                                                 : URL.createObjectURL(file)
                                         }
                                         alt="Preview"

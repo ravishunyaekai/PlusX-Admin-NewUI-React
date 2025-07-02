@@ -388,7 +388,7 @@ const EditElectricCar = () => {
                                     <img
                                         src={
                                             typeof file === 'string'
-                                                ? `${process.env.REACT_APP_SERVER_URL}uploads/car-rental-images/${file}`
+                                                ? `${process.env.REACT_APP_DIR_UPLOADS}car-rental-images/${file}`
                                                 : URL.createObjectURL(file)
                                         }
                                         alt="Preview"
@@ -427,7 +427,7 @@ const EditElectricCar = () => {
                                                 key={index}
                                                 src={
                                                     typeof file === 'string'
-                                                        ? `${process.env.REACT_APP_SERVER_URL}uploads/car-rental-images/${file}`
+                                                        ? `${process.env.REACT_APP_DIR_UPLOADS}car-rental-images/${file}`
                                                         : URL.createObjectURL(file)
                                                 }
                                                 alt={`Preview ${index + 1}`}
